@@ -45,9 +45,11 @@ def get_jasper_status():
 
 @app.route('/nexus/api/jasper/status', methods=["POST"])
 def set_jasper_status():
+    print "Foo: " + str(request.json)
+    print "Bar: " + request.data
     if not request.json or not "status" in request.json:
+        pass
         abort(400)
-    
     if request.json["status"]:
         force = False # Should we force restart?
         if "force" in request.json and request.json["force"] == True:
@@ -63,7 +65,6 @@ def set_jasper_status():
     else:
         os.system("pkill -f jasper.py")
         return jsonify({"status": False})
-
 
 
 if __name__ == '__main__':
